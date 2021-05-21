@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Currency from "react-currency-formatter";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { addToBasket } from "../slices/basketSlice";
 
 const MIN_RATING = 1;
@@ -31,6 +32,25 @@ function Product({ id, title, price, description, category, image }) {
 
         // Sending the product via an action to the redux store (= basket "slice")
         dispatch(addToBasket(product));
+
+        toast.success(
+            <>
+                <span className="font-bold">Added to basket!</span>
+                <br />
+                {product.title.slice(0, 30)}
+                {product.title.length > 30 ? "…" : ""}
+            </>,
+            {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                draggablePercent: 20,
+                progress: undefined,
+            }
+        );
     }
 
     return (
