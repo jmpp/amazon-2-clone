@@ -12,6 +12,7 @@
     "@tailwindcss/line-clamp": "^0.2.0",
     "firebase": "^8.6.2",
     "firebase-admin": "^9.8.0",
+    "lodash": "^4.17.21",
     "next": "latest",
     "next-auth": "^3.23.2",
     "react": "17.0.1",
