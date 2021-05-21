@@ -14,8 +14,8 @@ function Product({ id, title, price, description, category, image }) {
     const [hasPrime] = useState(Math.random() < 0.5);
 
     return (
-        <div className="relative flex flex-col m-5 bg-white z-30 p-10">
-            <p className="absolute top-2 right-2 text-xs italic text-gray-400">
+        <div className="relative flex flex-col m-5 bg-white z-30 p-10 growing-hover">
+            <p className="absolute top-2 right-3 text-sm italic text-gray-400">
                 {category}
             </p>
             <Image src={image} width={200} height={200} objectFit="contain" />
