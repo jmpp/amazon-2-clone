@@ -6,6 +6,7 @@ import { selectItems, selectTotal } from "../slices/basketSlice";
 import Currency from "react-currency-formatter";
 import { useSession } from "next-auth/client";
 import { groupBy } from "lodash";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 function Checkout() {
     const items = useSelector(selectItems);
@@ -36,19 +37,26 @@ function Checkout() {
                                 ? "Your Amazon Basket is empty."
                                 : "Shopping Basket"}
                         </h1>
-                        {groupedItems.map((group, i) => (
-                            <CheckoutProduct
-                                id={group[0].id}
-                                title={group[0].title}
-                                rating={group[0].rating}
-                                price={group[0].price}
-                                description={group[0].description}
-                                category={group[0].category}
-                                image={group[0].image}
-                                hasPrime={group[0].hasPrime}
-                                quantity={group.length}
-                            />
-                        ))}
+                        <TransitionGroup>
+                            {groupedItems.map((group, i) => (
+                                <CSSTransition
+                                    key={group[0].image}
+                                    timeout={500}
+                                    classNames="item">
+                                    <CheckoutProduct
+                                        id={group[0].id}
+                                        title={group[0].title}
+                                        rating={group[0].rating}
+                                        price={group[0].price}
+                                        description={group[0].description}
+                                        category={group[0].category}
+                                        image={group[0].image}
+                                        hasPrime={group[0].hasPrime}
+                                        quantity={group.length}
+                                    />
+                                </CSSTransition>
+                            ))}
+                        </TransitionGroup>
                     </div>
                 </div>
 

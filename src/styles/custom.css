@@ -1,0 +1,19 @@
+.item-enter {
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: 50% 50%;
+}
+.item-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 400ms ease-out;
+}
+.item-exit {
+    opacity: 1;
+    transform: scale(1);
+}
+.item-exit-active {
+    opacity: 0;
+    transform: scale(0);
+    transition: all 400ms ease-out;
+}
