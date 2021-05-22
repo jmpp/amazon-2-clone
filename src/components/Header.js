@@ -35,8 +35,9 @@ function Header(props) {
                         type="text"
                         className="p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none"
                         placeholder={
-                            router.route === "/" &&
-                            "🔎 Search in products listed below…"
+                            router.route === "/"
+                                ? "🔎 Search in products listed below…"
+                                : ""
                         }
                         onInput={(event) =>
                             router.route === "/" &&
