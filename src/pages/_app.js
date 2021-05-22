@@ -7,7 +7,7 @@ import "../styles/custom.css";
 
 import StorageService from "../services/StorageService";
 import { Provider as AuthProvider } from "next-auth/client";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, Zoom } from "react-toastify";
 import { hydrate } from "../slices/basketSlice";
 
 store.subscribe(() => {
@@ -24,7 +24,7 @@ const MyApp = ({ Component, pageProps }) => {
             {/* Gives the session's info to the components via a Provider */}
             <Provider store={store}>
                 <Component {...pageProps} />
-                <ToastContainer />
+                <ToastContainer transition={Zoom} />
             </Provider>
         </AuthProvider>
     );
