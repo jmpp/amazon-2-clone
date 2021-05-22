@@ -61,7 +61,11 @@ function Checkout() {
                 </div>
 
                 {/* Right */}
-                {items.length > 0 && (
+                <CSSTransition
+                    in={items.length > 0}
+                    timeout={300}
+                    classNames="disappear"
+                    unmountOnExit>
                     <div className="flex flex-col bg-white p-10 shadow-md">
                         <h2 className="whitespace-nowrap">
                             Subtotal ({items.length} items):{" "}
@@ -81,7 +85,7 @@ function Checkout() {
                                 : "Proceed to checkout"}
                         </button>
                     </div>
-                )}
+                </CSSTransition>
             </main>
         </div>
     );
