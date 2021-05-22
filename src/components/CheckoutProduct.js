@@ -48,7 +48,7 @@ function CheckoutProduct(props) {
     }
 
     return (
-        <div className="block py-4 sm:grid sm:grid-cols-5 sm:my-3">
+        <div className="block py-4 sm:grid sm:grid-cols-5 my-16 sm:my-3">
             <div className="text-center sm:text-left">
                 <Image
                     src={image}
@@ -59,7 +59,7 @@ function CheckoutProduct(props) {
             </div>
 
             {/* Middle */}
-            <div className="col-span-3 mx-5">
+            <div className="col-span-3 mx-5 mb-4 sm:mb-0">
                 <p className="my-3">{title}</p>
                 <div className="flex">
                     {Array(rating)
@@ -104,7 +104,7 @@ function CheckoutProduct(props) {
                     </button>
                 </div>
                 <button className="button" onClick={removeGroupFromBasket}>
-                    Remove all from Basket
+                    Remove from Basket
                 </button>
             </div>
         </div>
