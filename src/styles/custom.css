@@ -10,9 +10,14 @@
 }
 .item-exit {
     opacity: 1;
-    height: 200px;
+    height: 550px;
     transform: scale(1);
     will-change: height;
+}
+@media (min-width: 640px) {
+    .item-exit {
+        height: 200px;
+    }
 }
 .item-exit-active {
     opacity: 0;
