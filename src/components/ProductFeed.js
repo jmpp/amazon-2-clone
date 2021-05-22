@@ -18,11 +18,13 @@ function ProductFeed({ products }) {
                     />
                 ))}
 
-            <img
-                src="https://links.papareact.com/dyz"
-                alt=""
-                className="md:col-span-full"
-            />
+            {products.length > 0 && (
+                <img
+                    src="https://links.papareact.com/dyz"
+                    alt=""
+                    className="md:col-span-full"
+                />
+            )}
 
             <div className="md:col-span-2">
                 {products

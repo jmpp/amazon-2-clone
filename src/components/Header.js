@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { selectItems } from "../slices/basketSlice";
 
-function Header() {
+function Header(props) {
     const [session] = useSession();
     const router = useRouter();
     const items = useSelector(selectItems);
@@ -34,6 +34,14 @@ function Header() {
                     <input
                         type="text"
                         className="p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none"
+                        placeholder={
+                            router.route === "/" &&
+                            "🔎 Search in products listed below…"
+                        }
+                        onInput={(event) =>
+                            router.route === "/" &&
+                            props.onSearchValue(event.target.value)
+                        }
                     />
                     <SearchIcon className="h-12 p-4" />
                 </div>
