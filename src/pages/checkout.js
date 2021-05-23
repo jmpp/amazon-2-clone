@@ -7,11 +7,36 @@ import Currency from "react-currency-formatter";
 import { useSession } from "next-auth/client";
 import { groupBy } from "lodash";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+const stripePromise = loadStripe(process.env.stripe_public_key); // Variable d'environnement définie par le fichier next.config.js, pour le front
 
 function Checkout() {
     const items = useSelector(selectItems);
     const total = useSelector(selectTotal);
     const [session] = useSession();
+
+    async function createCheckoutSession() {
+        const stripe = await stripePromise;
+
+        // Call the backend to create a checkout session...
+        const checkoutSession = await axios.post(
+            "/api/create-checkout-session",
+            {
+                items,
+                email: session.user.email,
+            }
+        );
+
+        // After have created a session, redirect the user/customer to Stripe Checkout
+        const result = await stripe.redirectToCheckout({
+            sessionId: checkoutSession.data.id,
+        });
+
+        if (result.error) {
+            alert(result.error.message); // @todo : Improve that!
+        }
+    }
 
     const groupedItems = Object.values(groupBy(items, "id"));
     return (
@@ -75,6 +100,8 @@ function Checkout() {
                         </h2>
 
                         <button
+                            role="link"
+                            onClick={createCheckoutSession}
                             disabled={!session}
                             className={`button mt-2 ${
                                 !session &&

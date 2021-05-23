@@ -10,6 +10,12 @@ const firebaseConfig = {
     appId: "1:246024766381:web:50eb134eb0659e461d9724",
 };
 
+const app = !firebase.apps.length
+    ? firebase.initializeApp(firebaseConfig)
+    : firebase.app();
+
+export const db = app.firestore();
+
 // no analitycs
 
 // go authentication

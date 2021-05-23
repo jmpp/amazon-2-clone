@@ -61,7 +61,9 @@ function Header(props) {
                             Account & Lists
                         </p>
                     </div>
-                    <div className="link">
+                    <div
+                        className="link"
+                        onClick={() => router.push("/orders")}>
                         <p>Returns</p>
                         <p className="font-extrabold md:text-sm">& Orders</p>
                     </div>
