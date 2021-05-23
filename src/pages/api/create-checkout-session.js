@@ -1,6 +1,8 @@
 // Here, we are on a Node.js backend
 // Everything underneath "/api/" folder is BACKEND code !
 
+import { groupBy } from "lodash";
+
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async (req, res) => {
@@ -11,15 +13,17 @@ export default async (req, res) => {
 
     // @Todo : READ THE STRIPE DOCS!
 
-    const transformedItems = items.map((item) => ({
-        description: item.description,
-        quantity: 1, // @Todo : Deal with the quantity feature!!
+    const groupedItems = Object.values(groupBy(items, "id"));
+
+    const transformedItems = groupedItems.map((group) => ({
+        description: group[0].description,
+        quantity: group.length,
         price_data: {
             currency: "eur",
-            unit_amount: item.price * 100, // ?? why RTFM!
+            unit_amount: group[0].price * 100, // Still don't really know here why we should times by 100 🤔
             product_data: {
-                name: item.title,
-                images: [item.image],
+                name: group[0].title,
+                images: [group[0].image],
             },
         },
     }));

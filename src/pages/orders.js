@@ -9,7 +9,6 @@ function Orders({ orders }) {
     const [session] = useSession();
     const router = useRouter();
 
-    console.log(orders);
     return (
         <div>
             <Header />
