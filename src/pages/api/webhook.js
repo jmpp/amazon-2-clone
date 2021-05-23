@@ -20,6 +20,10 @@ const endpointSecret = process.env.STRIPE_SIGNING_SECRET; // WHERE IS THIS?
 const fulfillOrder = async (session) => {
     console.log("Fulfilling order", session);
 
+    const images = JSON.parse(session.metadata.images).map((image) =>
+        JSON.stringify(image)
+    );
+
     return app
         .firestore()
         .collection("AMAZON_users")
@@ -29,14 +33,15 @@ const fulfillOrder = async (session) => {
         .set({
             amount: session.amount_total / 100,
             amount_shipping: session.total_details.amount_shipping / 100,
-            images: JSON.parse(session.metadata.images),
+            images: images,
             timestamp: admin.firestore.FieldValue.serverTimestamp(),
         })
         .then(() => {
             console.log(
                 `SUCCESS: Order ${session.id} had been added to the DB`
             );
-        });
+        })
+        .catch((err) => console.log("Erreur a l'insertion !", err.message));
 };
 
 export default async (req, res) => {

@@ -4,6 +4,7 @@
 import { groupBy } from "lodash";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const path = require("path");
 
 export default async (req, res) => {
     const { items, email } = req.body;
@@ -28,6 +29,19 @@ export default async (req, res) => {
         },
     }));
 
+    // Instead of sending an array of multiple similar values, just group them to save space in session
+    const groupedImages = Object.values(
+        groupBy(items.map((item) => path.basename(item.image)))
+    ).map((group) => [group.length, group[0]]);
+    /*
+        This gives us an array like this (shorter for storing into the session):
+        [
+            [2, "image_A.jpg"], // means "2 products with that same image"
+            [1, "image_B.jpg"], // ...
+            [6, "image_C.jpg"], // ...
+        ]
+    */
+
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         shipping_rates: ["shr_1ItxEGD8l9oFdCaKmyn7pZyk"], // Created fees in Stripe's dashboard
@@ -40,7 +54,7 @@ export default async (req, res) => {
         cancel_url: `${process.env.HOST}/checkout`,
         metadata: {
             email,
-            images: JSON.stringify(items.map((item) => item.image)),
+            images: JSON.stringify(groupedImages),
         },
     });
 
